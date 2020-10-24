@@ -55,6 +55,7 @@ def register():
         # Insert the username and hash onto the SQL database
         try:
             db.execute("INSERT INTO users (username, hash) VALUES (:username, :hash)", username=username, hash=generate_password_hash(password))
+            db.execute("CREATE TABLE IF NOT EXISTS :tablename ('id' INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,'text' TEXT NOT NULL, 'timestamp' DATETIME DEFAULT CURRENT_TIMESTAMP, 'nature' TEXT DEFAULT 'na')", tablename=username)
             return redirect("/")
         except Exception as msg:
             if "unique constraint failed" in str(msg).lower():
@@ -86,21 +87,39 @@ def logout():
 @app.route("/", methods=["GET", "POST"])
 @login_required
 def index():
-    return render_template("index.html")
+    userInfo = UserInfo()[0]
+    if request.method == "GET":
+        get_posts = db.execute("SELECT * FROM :tablename", tablename=userInfo['username'])
+        if get_posts:
+            return render_template("index.html", posts=get_posts)
+        else:
+            return render_template("index.html")
+    else:
+        post_text = request.form.get("post")
+        if not post_text:
+            return redirect("/")
+        #TODO Integrate the ML Model
+        try:
+            db.execute("INSERT INTO :tablename ('text') VALUES (:post_text)", tablename=userInfo['username'], post_text=post_text)
+            return redirect("/")
+        except:
+            return error("Request could not be performed")
 
 @app.route("/profile", methods=["GET", "POST"])
 @login_required
 def profile():
     userInfo = UserInfo()[0]
+    get_posts = db.execute("SELECT * FROM :tablename", tablename=userInfo['username'])
     dp = "static/dp/" + userInfo['username'] + "." + userInfo['dp']
     if not os.path.exists(dp):
         dp = "../static/dp/"+"default.png"
     else:
         dp = "../static/dp/" + userInfo['username'] + "." + userInfo['dp']
     if request.method == "GET":
-        return render_template("profile.html", userInfo=userInfo, dp=dp)
+        return render_template("profile.html", userInfo=userInfo, dp=dp, posts=get_posts)
     else:
         new_bio = request.form.get("bio")
+        new_post = request.form.get("post")
         if request.form.get("dp_submit"):
             dp_file = request.files['dp_upload']
         else :
@@ -114,9 +133,14 @@ def profile():
         elif new_bio:
             db.execute("UPDATE users SET bio=:new_bio WHERE id=:user_id", new_bio=new_bio, user_id=session["user_id"])
             return redirect("/profile")
+        elif new_post:
+            try:
+                db.execute("INSERT INTO :tablename ('text') VALUES (:post_text)", tablename=userInfo['username'], post_text=new_post)
+                return redirect("/profile")
+            except:
+                return error("Request could not be performed")
         else:
             return redirect("/profile")
-
 
 # Error handler
 def errorhandler(e):
