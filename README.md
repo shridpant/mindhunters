@@ -112,4 +112,6 @@ We plan to extend the `Mindhunters` algorithm to include images, audios and vide
 [license-shield]: https://img.shields.io/apm/l/vim-mode
 [license-url]: https://github.com/shridpant/mindhunters/blob/master/LICENSE
 [product-screenshot]: static/screenshot.PNG
+[search-screenshot]: static/search-screenshot.PNG
+[other-screenshot]: static/other-screenshot.PNG
 
