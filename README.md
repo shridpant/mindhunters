@@ -51,6 +51,10 @@ Cyber bullying has risen exponentially over the years, especially among teens. A
 
 This project was made in our participation of `UB Hacking 2020`.
 
+### Working 
+
+Each post a user posts has a score associated with it. The score is given by the sigmoid function of the output layer of NLP model. If the value of score is greater than 0.5 the post is considered to be voilent and the reputation value is decreased according to a simple formula, vice versa if the score is less than 0.5. The reputation score helps us in determining the frequency of voilent posts that a user posts on social media.
+
 ### Built With
 
 The server-side application was built with Flask, Keras and NLTK. Other resources included SQLite3 for database management, and HTML, CSS and JavaScript for the client-side application. Mindhunters was made possible by many open-sourced libraries and frameworks.
