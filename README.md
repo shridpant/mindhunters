@@ -35,6 +35,7 @@
 * [Contrubuting](#contributing)
 * [License](#license)
 * [Contact](#contact)
+* [Future Works](#future-works)
 * [Acknowledgements](#acknowledgements)
 
 ## Premise
@@ -75,6 +76,11 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ## Contact
 
 The entire `Mindhunters` application was built by [Gaurav Agrawal](https://www.linkedin.com/in/gaurav-agrawal-070599192/), [Shrid Pant](https://www.linkedin.com/in/shridpant/) and [Tarun Dhankhar](https://www.linkedin.com/in/tarundhankhar/). Please feel free to contact any of us to discuss the project!
+
+## Future Works
+
+We plan to extend the `Mindhunters` algorithm to include images, audios and videos. 
+
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledements
 

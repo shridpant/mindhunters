@@ -11,9 +11,10 @@
         <input autocomplete="off" autofocus class="form-control" name="post" placeholder="What's on your mind?" type="text">
         &nbsp;<input type="submit" name="submit" value="Post">
     </div>
-</form><br /><hr><br />
+</form>
 
 {% if posts is defined %}
+<br /><hr><br />
     {% for post in posts %}
     <div class="card border-dark mb-3 text-center">
         <div class="card-body text-dark">

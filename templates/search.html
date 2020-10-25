@@ -10,9 +10,10 @@
         <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text">
         &nbsp;<input type="submit" name="submit" value="Look up">
     </div>
-</form><br /><hr><br />
+</form>
 
 {% if method=="POST" %}
+<br /><hr><br />
     {% if results is defined %}
         <dl class="center">
             {% for result in results %}
