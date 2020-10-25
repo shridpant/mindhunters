@@ -67,11 +67,11 @@ The web application contains a number of extra features. Examples:
 
 1. Looking up other users
 
-[![Search Screenshot][search-screenshot]]
+![Search Screenshot][search-screenshot]
 
 2. Public profile
 
-[![Profile Screenshot][other-screenshot]]
+![Profile Screenshot][other-screenshot]
 
 ## Contributing
 
