@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Search
+{% endblock %}
+
+{% block main %}
+<form action="/search" method="post">
+    <div class="form-group">
+        <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text">
+        &nbsp;<input type="submit" name="submit" value="Look up">
+    </div>
+</form><br /><hr><br />
+
+{% if method=="POST" %}
+    {% if results is defined %}
+        <dl class="center">
+            {% for result in results %}
+            <div class="row">
+                <div class="col-5" style="text-align: right;">
+                    <img src="{{ dp }}" style="max-width:25%; max-height:auto" alt="Display Picture"><br />
+                </div>
+                <div class="col-5" style="text-align: left;">
+                    <dt><a href='/{{ result["username"] }}' target="_blank">{{ result["username"] }}</a></dt>
+                    <dd>- {{ result["bio"] }}</dd>
+                </div>
+            </div>
+            {% endfor %}
+        </dl>
+    {% else %}
+        <p><strong>No results</strong> found in our database :/</p>  
+    {% endif %}
+    {% endif %}
+
+{% endblock %}

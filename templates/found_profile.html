@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    {{ user["username"] }}
+{% endblock %}
+
+{% block main %}
+
+<div class="row">
+    <div class="col-4" style="text-align: right;">
+        <img src="{{ dp }}" style="max-width:75%; max-height:auto" alt="Display Picture">
+    </div>
+    <div class="col-6" style="text-align: left;">
+            <h2 class="card-title"><strong>{{ user["username"] }}</strong></h2>
+            <p>{{ user["bio"] }}</p><br />
+    </div>
+</div>
+{% if posts is defined %}
+<br /><hr><br />
+<h3>{{ user["username"] }}'s Feed</h3><br />
+        {% for post in posts %}
+        <div class="card border-dark mb-3 text-center">
+            <div class="card-body text-dark">
+                    <h5 class="card-title">{{ post["text"] }}</h5>
+                    <p class="card-text"><em>{{ post["timestamp"] }}</em></p>
+                    <i onclick="myFunction(this)" class="fa fa-thumbs-up"></i>
+            </div>
+        </div><br />
+        {% endfor %}
+{% endif %}
+<script>
+    function myFunction(x) {
+        x.classList.toggle("fa-thumbs-down");
+    }
+</script>
+{% endblock %}

@@ -32,8 +32,13 @@ def error(message, code=400):
     return render_template("error.html", top=code, bottom=message), code
 
 def UserInfo():
-    user_id_info = db.execute("SELECT * FROM users WHERE id = :id", id = session["user_id"])
-    return user_id_info
+    user_id_info = db.execute("SELECT * FROM users WHERE id = :id", id = session["user_id"])[0]
+    dp = "static/dp/" + user_id_info['username'] + "." + user_id_info['dp']
+    if not os.path.exists(dp):
+        dp = "../static/dp/"+"default.png"
+    else:
+        dp = "../static/dp/" + user_id_info['username'] + "." + user_id_info['dp']
+    return user_id_info, dp
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -87,11 +92,11 @@ def logout():
 @app.route("/", methods=["GET", "POST"])
 @login_required
 def index():
-    userInfo = UserInfo()[0]
+    userInfo, dp = UserInfo()
     if request.method == "GET":
         get_posts = db.execute("SELECT * FROM :tablename", tablename=userInfo['username'])
         if get_posts:
-            return render_template("index.html", posts=get_posts)
+            return render_template("index.html", posts=get_posts, dp=dp, user=userInfo)
         else:
             return render_template("index.html")
     else:
@@ -105,21 +110,56 @@ def index():
         except:
             return error("Request could not be performed")
 
-@app.route("/profile", methods=["GET", "POST"])
+@app.route("/search", methods=["GET", "POST"])
 @login_required
-def profile():
-    userInfo = UserInfo()[0]
-    get_posts = db.execute("SELECT * FROM :tablename", tablename=userInfo['username'])
-    dp = "static/dp/" + userInfo['username'] + "." + userInfo['dp']
+def search():
+    if request.method == "GET":
+        return render_template("search.html")
+    else:
+        target_uname = request.form.get("username")
+        match=db.execute("SELECT * FROM users WHERE username=:target_uname", target_uname=target_uname)
+        if not match:
+            return render_template("search.html", method="POST")
+        dp = "static/dp/" + match[0]['username'] + "." + match[0]['dp']
+        if not os.path.exists(dp):
+            dp = "../static/dp/"+"default.png"
+        else:
+            dp = "../static/dp/" + match[0]['username'] + "." + match[0]['dp']
+        return render_template("search.html", method="POST", dp=dp, results=match)
+
+@app.route("/<string:target>")
+@login_required
+def LookupProfiles(target):
+    match = db.execute("SELECT * FROM users WHERE username=:target", target=target)
+    if not match:
+        return error("Page not found!", 404)
+    # DP Search
+    dp = "static/dp/" + match[0]['username'] + "." + match[0]['dp']
     if not os.path.exists(dp):
         dp = "../static/dp/"+"default.png"
     else:
-        dp = "../static/dp/" + userInfo['username'] + "." + userInfo['dp']
+        dp = "../static/dp/" + match[0]['username'] + "." + match[0]['dp']
+    # Profile Feed
+    get_posts = db.execute("SELECT * FROM :tablename", tablename=match[0]['username'])
+    if get_posts:
+        return render_template("found_profile.html", dp=dp, user=match[0], posts=get_posts)
+    else:
+        return render_template("found_profile.html", dp=dp, user=match[0])
+
+
+@app.route("/about", methods=["GET"])
+@login_required
+def about():
+    return render_template("about.html")
+
+@app.route("/profile", methods=["GET", "POST"])
+@login_required
+def profile():
+    userInfo, dp = UserInfo()
     if request.method == "GET":
-        return render_template("profile.html", userInfo=userInfo, dp=dp, posts=get_posts)
+        return render_template("profile.html", userInfo=userInfo, dp=dp)
     else:
         new_bio = request.form.get("bio")
-        new_post = request.form.get("post")
         if request.form.get("dp_submit"):
             dp_file = request.files['dp_upload']
         else :
@@ -133,12 +173,6 @@ def profile():
         elif new_bio:
             db.execute("UPDATE users SET bio=:new_bio WHERE id=:user_id", new_bio=new_bio, user_id=session["user_id"])
             return redirect("/profile")
-        elif new_post:
-            try:
-                db.execute("INSERT INTO :tablename ('text') VALUES (:post_text)", tablename=userInfo['username'], post_text=new_post)
-                return redirect("/profile")
-            except:
-                return error("Request could not be performed")
         else:
             return redirect("/profile")
 

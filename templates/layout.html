@@ -10,6 +10,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         {% block custom %}
         {% endblock %}
         <style>
@@ -49,7 +50,6 @@
 
     </head>
     <body>
-    <div class="container-fluid">
         <nav class="navbar navbar-dark bg-dark navbar-expand-md" style="background-color: transparent;">
             <a class="navbar-brand" href="/">Home</a>
             <button aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbar" data-toggle="collapse" type="button">
@@ -59,8 +59,8 @@
                 {% if session.user_id %}
                     <ul class="navbar-nav mr-auto mt-2">
                         <li class="nav-item"><a class="nav-link" href="/">Feed</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/">Search</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/">About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/search">Search</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/about">About</a></li>
                     </ul>
                     <ul class="navbar-nav ml-auto mt-2">
                         <li class="nav-item"><a class="nav-link" href="/profile">Profile</a></li>
@@ -74,7 +74,6 @@
                 {% endif %}
             </div>
         </nav>
-    </div>
         <main class="container p-5">
             {% block main %}{% endblock %}
         </main>
