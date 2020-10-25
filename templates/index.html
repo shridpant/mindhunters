@@ -6,12 +6,19 @@
 
 {% block main %}
 
-<form action="/" method="post">
-    <div class="form-group">
-        <input autocomplete="off" autofocus class="form-control" name="post" placeholder="What's on your mind?" type="text">
-        &nbsp;<input type="submit" name="submit" value="Post">
+<div class="row">
+    <div class="col-6" style="text-align: right;">
+        <form action="/" method="post">
+            <div class="form-group">
+                <input autocomplete="off" autofocus class="form-control" name="post" placeholder="What's on your mind?" type="text">
+                &nbsp;<input type="submit" name="submit" value="Post">
+            </div>
+        </form>
     </div>
-</form>
+    <div class="col-4" style="text-align: left;">
+        <a href="" class="btn btn-outline-dark">Reputation Score: {{ reputation }}</a>
+    </div>
+</div>
 
 {% if posts is defined %}
 <br /><hr><br />
@@ -25,6 +32,7 @@
                 </div>
                 <div class="col-6" style="text-align: left;">
                     <h5 class="card-title">{{ post["text"] }}</h5>
+                    <p class="card-text"><em>{{ post["nature"] }}</em></p>
                     <p class="card-text"><em>{{ post["timestamp"] }}</em></p>
                 </div>
             </div>

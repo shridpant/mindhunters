@@ -8,6 +8,92 @@ from werkzeug.utils import secure_filename
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
 
+#######
+import pickle
+import pandas as pd
+import numpy as np
+import string
+import nltk
+from nltk.stem import WordNetLemmatizer
+from nltk.corpus import stopwords
+from nltk.corpus import wordnet
+from nltk import pos_tag
+from nltk.tokenize import word_tokenize
+from tensorflow.keras.models import load_model
+
+from keras.models import Model
+from keras.layers import Dense, Input, Dropout, LSTM, Activation
+from keras.layers.embeddings import Embedding
+from keras.preprocessing import sequence
+from keras.initializers import glorot_uniform
+
+lemmatizer = WordNetLemmatizer()
+stop_words = set(stopwords.words('english'))
+stop_words.update(list(string.punctuation))
+
+def get_simple_pos(tag) :
+    if tag.startswith('J') :
+        return wordnet.ADJ
+    elif tag.startswith('V') :
+        return wordnet.VERB
+    elif tag.startswith('N') :
+        return wordnet.NOUN
+    elif tag.startswith('R') :
+        return wordnet.ADV
+    else:
+        return wordnet.NOUN
+
+max_len = 30
+def clean_text(review) :
+    global max_len 
+    words = word_tokenize(review)
+    output_words = []
+    for word in words :
+        if word.lower() not in stop_words :
+            pos = pos_tag([word])
+            clean_word = lemmatizer.lemmatize(word,pos = get_simple_pos(pos[0][1]))
+            output_words.append(clean_word.lower())
+    max_len = max(max_len, len(output_words))
+    return " ".join(output_words)
+
+def read_glove_vecs(glove_file):
+    with open(glove_file, 'r', encoding="utf8") as file:
+        word_to_vec_map = {}
+        word_to_index = {}
+        index_to_word = {}
+        index = 0
+        for line in file:
+            line = line.strip().split()
+            curr_word = line[0]
+            word_to_index[curr_word] = index
+            index_to_word[index] = curr_word
+            word_to_vec_map[curr_word] = np.array(line[1:], dtype=np.float64)
+            index += 1
+    return word_to_index, index_to_word, word_to_vec_map
+
+def sentences_to_indices(X, word_to_index, max_len):
+    m = len(X)
+    X_indices = np.zeros((m, max_len))
+    for i in range(m):
+        sentence_words = [w.lower() for w in X[i].split()]
+        j = 0
+        for word in sentence_words:
+            if word in word_to_index:
+                X_indices[i, j] = word_to_index[word]
+            j += 1
+    return X_indices
+
+#word_to_index, index_to_word, word_to_vec_map = read_glove_vecs('glove.6B.50d.txt')
+filename = 'word_to_index.pkl'
+word_to_index =  pickle.load(open(filename, 'rb')) 
+print(len(word_to_index))
+
+model = load_model('model.h5')
+#print(model.summary())
+
+#######
+
+
 # Configure application
 app = Flask(__name__)
 # Ensure templates are auto-reloaded
@@ -96,20 +182,30 @@ def index():
     if request.method == "GET":
         get_posts = db.execute("SELECT * FROM :tablename", tablename=userInfo['username'])
         if get_posts:
-            return render_template("index.html", posts=get_posts, dp=dp, user=userInfo)
+            return render_template("index.html", posts=get_posts, dp=dp, user=userInfo, reputation = ((userInfo['score']/userInfo['total'])*10))
         else:
             return render_template("index.html")
     else:
         post_text = request.form.get("post")
         if not post_text:
             return redirect("/")
-        #TODO Integrate the ML Model
-        try:
-            db.execute("INSERT INTO :tablename ('text') VALUES (:post_text)", tablename=userInfo['username'], post_text=post_text)
+        text = clean_text(post_text)
+        text = [text]
+        text = sentences_to_indices(text,word_to_index,max_len)
+        ans = model.predict(text)[0][0]
+        db.execute("INSERT INTO :tablename ('text', 'nature') VALUES (:post_text, :score)", tablename=userInfo['username'], post_text=post_text, score=str(ans))
+        if (ans < 0.4):
+            score = (0.4 - ans)
+            total = "{:.2f}".format(userInfo['total'] + score)
+            good_score = "{:.2f}".format(userInfo['score'] + score)
+            db.execute("UPDATE users SET score=:score, total=:total WHERE id=:user_id", score = good_score, total = total, user_id = session["user_id"])
             return redirect("/")
-        except:
-            return error("Request could not be performed")
-
+        else:
+            score = (ans - 0.4)
+            total = "{:.2f}".format((userInfo['total'] + score))
+            db.execute("UPDATE users SET total=:total WHERE id=:user_id", total = total, user_id = session["user_id"])
+            return redirect("/")
+        
 @app.route("/search", methods=["GET", "POST"])
 @login_required
 def search():
@@ -142,9 +238,9 @@ def LookupProfiles(target):
     # Profile Feed
     get_posts = db.execute("SELECT * FROM :tablename", tablename=match[0]['username'])
     if get_posts:
-        return render_template("found_profile.html", dp=dp, user=match[0], posts=get_posts)
+        return render_template("found_profile.html", dp=dp, user=match[0], posts=get_posts, reputation=((match[0]['score']/match[0]['total'])*10))
     else:
-        return render_template("found_profile.html", dp=dp, user=match[0])
+        return render_template("found_profile.html", dp=dp, user=match[0], reputation=((match[0]['score']/match[0]['total'])*10))
 
 
 @app.route("/about", methods=["GET"])
@@ -157,7 +253,7 @@ def about():
 def profile():
     userInfo, dp = UserInfo()
     if request.method == "GET":
-        return render_template("profile.html", userInfo=userInfo, dp=dp)
+        return render_template("profile.html", userInfo=userInfo, dp=dp, reputation=((userInfo['score']/userInfo['total'])*10))
     else:
         new_bio = request.form.get("bio")
         if request.form.get("dp_submit"):
