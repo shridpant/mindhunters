@@ -8,11 +8,6 @@ from werkzeug.utils import secure_filename
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
 
-<<<<<<< HEAD
-=======
-
-
->>>>>>> bff7908fc0d7db42d527cd06d59a53066f8a76aa
 #######
 import pickle
 import pandas as pd
@@ -24,10 +19,6 @@ from nltk.corpus import stopwords
 from nltk.corpus import wordnet
 from nltk import pos_tag
 from nltk.tokenize import word_tokenize
-<<<<<<< HEAD
-=======
-from sklearn.feature_extraction.text import CountVectorizer
->>>>>>> bff7908fc0d7db42d527cd06d59a53066f8a76aa
 from tensorflow.keras.models import load_model
 
 from keras.models import Model
@@ -202,24 +193,12 @@ def index():
         text = [text]
         text = sentences_to_indices(text,word_to_index,max_len)
         ans = model.predict(text)[0][0]
-<<<<<<< HEAD
         db.execute("INSERT INTO :tablename ('text', 'nature') VALUES (:post_text, :score)", tablename=userInfo['username'], post_text=post_text, score=str(ans))
         if (ans < 0.4):
             score = (0.4 - ans)
             total = "{:.2f}".format(userInfo['total'] + score)
             good_score = "{:.2f}".format(userInfo['score'] + score)
             db.execute("UPDATE users SET score=:score, total=:total WHERE id=:user_id", score = good_score, total = total, user_id = session["user_id"])
-=======
-        #print(ans)
-        if(ans < 0.5) :
-            print("Not Flagged !")
-            return render_template('index.html',result=f"Posted !{ans}")
-        else :
-            print("Flagged !")
-            return render_template('index.html',result=f"Post has been flagged ! {ans}")
-        try:
-            db.execute("INSERT INTO :tablename ('text') VALUES (:post_text)", tablename=userInfo['username'], post_text=post_text)
->>>>>>> bff7908fc0d7db42d527cd06d59a53066f8a76aa
             return redirect("/")
         else:
             score = (ans - 0.4)
