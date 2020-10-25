@@ -47,21 +47,31 @@ Cyber bullying has risen exponentially over the years, especially among teens. A
 
 [![Product Name Screenshot][product-screenshot]](https://github.com/shridpant/mindhunters)
 
-`Mindhunters` is a state-of-the-art NLP-algorithm on which this social media platform is wrapped. It provides sophisticated detection of texts that are violent, offensive, sexist, racist, discriminant or derogatory in nature. The generated scores are used to provide alerts to the social media platform, which may take appropriate action against the post and/or user.
+`Mindhunters` is a state-of-the-art LSTM-based NLP-algorithm on which this social media platform is wrapped. It provides sophisticated detection of texts that are violent, offensive, sexist, racist, discriminant or derogatory in nature. Scores are generated using `Mindhunters`, which affect the "Reputation" of each user. The generated scores are used to provide alerts to the social media platform, which may take appropriate action against the post and/or user. 
 
 This project was made in our participation of `UB Hacking 2020`.
 
 ### Built With
 
-The server-side application was built with Flask. Other resources included SQLite3 for database management, and HTML, CSS and JavaScript for the client-side application. Mindhunters was made possible by many open-sourced libraries and frameworks.
+The server-side application was built with Flask, Keras and NLTK. Other resources included SQLite3 for database management, and HTML, CSS and JavaScript for the client-side application. Mindhunters was made possible by many open-sourced libraries and frameworks.
 
 ### Usage
 
-The social media platform is a web application which is monitored by `Mindhunters` to provide safety from cyber bullying. To execute, simply:
+The social media platform is a web application monitored by `Mindhunters` to provide safety from cyber bullying. To execute, simply:
 
 1. Clone this repository with `git clone https://github.com/shridpant/mindhunters`. Please ensure that you have all the dependencies from `requirements.txt` installed.
 2. Start your server with `python app.py`.
 3. Open the address from your terminal on your browser. And you're all set!
+
+The web application contains a number of extra features. Examples:
+
+1. Looking up other users
+
+[![Search Screenshot][search-screenshot]]
+
+2. Public profile
+
+[![Profile Screenshot][other-screenshot]]
 
 ## Contributing
 
@@ -79,15 +89,18 @@ The entire `Mindhunters` application was built by [Gaurav Agrawal](https://www.l
 
 ## Future Works
 
-We plan to extend the `Mindhunters` algorithm to include images, audios and videos. 
+We plan to extend the `Mindhunters` algorithm to include images, audios and videos. In text-based analysis, `Mindhunter` can be extended to the identification of misinformation ("fake news").
 
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledements
 
 `Mindhunters` wouldn't be possible without the following resources:
 
+* [Tensorflow](https://www.tensorflow.org/)
+* [NLTK](https://www.nltk.org/)
 * [Flask](https://flask.palletsprojects.com/en/1.1.x/)
 * [Jupyter Notebook](https://jupyter.org/)
+* [Keras](https://keras.io/)
 * [Bootstrap](https://getbootstrap.com)
 * [JQuery](https://jquery.com)
 * [Google Fonts](https://fonts.google.com/)
