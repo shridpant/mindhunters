@@ -24,7 +24,6 @@
   </p>
 </p>
 
-
 <!-- TABLE OF CONTENTS -->
 ## Table of Contents
 
@@ -41,24 +40,25 @@
 
 ## Premise
 
-Cyber bullying has risen exponentially over the years, especially among teens. And while the traumatic experiences of the victims are well-known, little has been done by social media giants to preemptively take action. On a large scale application, merely acting on "reported posts" is not nearly sufficient. It is absolutely necessary to proactively participate in the prevention of cyber bullying.
+**Cyber bullying** has risen exponentially over the years, especially among teens. And while the traumatic experiences of the victims are well-known, little has been done by social media giants to preemptively take action. On a large scale application, merely acting on the _reported posts_ is not nearly sufficient. It is absolutely necessary to proactively participate in the prevention of cyber bullying.
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
 [![Product Name Screenshot][product-screenshot]](https://github.com/shridpant/mindhunters)
 
-`Mindhunters` is a state-of-the-art LSTM-based NLP-algorithm on which this social media platform is wrapped. It provides sophisticated detection of texts that are violent, offensive, sexist, racist, discriminant or derogatory in nature. Scores are generated using `Mindhunters`, which affect the "Reputation" of each user. The generated scores are used to provide alerts to the social media platform, which may take appropriate action against the post and/or user. 
+`Mindhunters` is a state-of-the-art LSTM-based NLP-algorithm on which this social media platform is wrapped. It provides sophisticated detection of texts that are violent, offensive, sexist, racist, discriminant or derogatory in nature. Scores are generated using `Mindhunters`, which affect the _reputation_ of each user. The generated scores are used to provide alerts to the social media platform, which may take appropriate action against the post and/or user. 
 
-This project was made in our participation of `UB Hacking 2020`.
+This project was, originally, made in our participation of <a href="https://devpost.com/software/mindhunters" target="_blank">`UB Hacking 2020`</a>.
 
 ### Built With
 
-The server-side application was built with Flask, Keras and NLTK. Other resources included SQLite3 for database management, and HTML, CSS and JavaScript for the client-side application. Mindhunters was made possible by many open-sourced libraries and frameworks.
+The server-side application was built with Flask, Keras and NLTK. SQLite3 was employed for database management, and HTML, CSS and JavaScript for the client-side application. `Mindhunters` was made possible by many open-sourced libraries and frameworks.
 
 ### Working 
 
-Each post a user posts has a score associated with it. The score is given by the sigmoid function of the output layer of NLP model. If the value of score is greater than 0.5 the post is considered to be voilent and the reputation value is decreased according to a simple formula, vice versa if the score is less than 0.5. The reputation score helps us in determining the frequency of voilent posts that a user posts on social media.
+A _score_ is associated with each post that the users make. The _score_ is assigned by the sigmoid function in the output layer of `Mindhunters`. If the value of the _score_ is greater than the threshold (θ), then the post is considered to be inappropriate. _θ_ may be tuned between a value of 0 and 1, according to the required sensitivity. The _reputation_ of the users are determined by the _f(x)_, where _f_ is a function incorporating all the individual _scores_ of the posts for each user. Posts that are marked inappropriate decrease the _reputation_ of the users, while the other posts increase it.
+While the _reputation_ system was created to work on the backend of the application, the current version of the Social Media publicly displays the _score_ assigned to each post and the _reputation_ associated with each user. In practise, however, these parameters may be used in he backend to evaluate reasonable actions, including reporting the users to law enforcement.
 
 ### Usage
 
@@ -68,7 +68,7 @@ The social media platform is a web application monitored by `Mindhunters` to pro
 2. Start your server with `python app.py`.
 3. Open the address from your terminal on your browser. And you're all set!
 
-The web application contains a number of extra features. Examples:
+The web application contains a number of desirable features. Examples:
 
 1. Looking up other users
 
@@ -90,11 +90,11 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-The entire `Mindhunters` application was built by [Gaurav Agrawal](https://www.linkedin.com/in/gaurav-agrawal-070599192/), [Shrid Pant](https://www.linkedin.com/in/shridpant/) and [Tarun Dhankhar](https://www.linkedin.com/in/tarundhankhar/). Please feel free to contact any of us to discuss the project!
+The entire `Mindhunters` application was built by [Gaurav Agrawal](https://www.linkedin.com/in/gaurav-agrawal-070599192/), [Shrid Pant](https://www.linkedin.com/in/shridpant/) and [Tarun Dhankhar](https://www.linkedin.com/in/tarundhankhar/). Please feel free to contact us with regards to the project!
 
 ## Future Works
 
-We plan to extend the `Mindhunters` algorithm to include images, audios and videos. In text-based analysis, `Mindhunter` can be extended to the identification of misinformation ("fake news").
+We plan to extend the `Mindhunters` algorithm to identify misinformation (_fake news_). Further, we plan to include support for images, audios and videos. 
 
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledements
