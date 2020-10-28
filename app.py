@@ -10,6 +10,7 @@ from werkzeug.exceptions import default_exceptions, HTTPException, InternalServe
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from src import mindhunters
+from src.helpers import UserInfo, login_required, error
 
 # Configure application
 app = Flask(__name__)
@@ -25,26 +26,6 @@ db = SQL("sqlite:///src/main.db")
 # Load the ML model and initiate Mindhunters
 model = load_model('src/model.h5')
 word_to_index, max_len = mindhunters.init()
-
-def login_required(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if session.get("user_id") is None:
-            return redirect("/login")
-        return f(*args, **kwargs)
-    return decorated_function
-
-def error(message, code=400):
-    return render_template("error.html", top=code, bottom=message), code
-
-def UserInfo():
-    user_id_info = db.execute("SELECT * FROM users WHERE id = :id", id = session["user_id"])[0]
-    dp = "static/dp/" + user_id_info['username'] + "." + user_id_info['dp']
-    if not os.path.exists(dp):
-        dp = "../static/dp/"+"default.png"
-    else:
-        dp = "../static/dp/" + user_id_info['username'] + "." + user_id_info['dp']
-    return user_id_info, dp
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -98,7 +79,7 @@ def logout():
 @app.route("/", methods=["GET", "POST"])
 @login_required
 def index():
-    userInfo, dp = UserInfo()
+    userInfo, dp = UserInfo(db)
     if request.method == "GET":
         get_posts = db.execute("SELECT * FROM :tablename", tablename=userInfo['username'])
         if get_posts:
@@ -170,7 +151,7 @@ def about():
 @app.route("/profile", methods=["GET", "POST"])
 @login_required
 def profile():
-    userInfo, dp = UserInfo()
+    userInfo, dp = UserInfo(db)
     if request.method == "GET":
         return render_template("profile.html", userInfo=userInfo, dp=dp, reputation=((userInfo['score']/userInfo['total'])*10))
     else:

@@ -64,9 +64,10 @@ While the _reputation_ system was created to work on the backend of the applicat
 
 The social media platform is a web application monitored by `Mindhunters` to provide safety from cyber bullying. To execute, simply:
 
-1. Clone this repository with `git clone https://github.com/shridpant/mindhunters`. Please ensure that you have all the dependencies from `requirements.txt` installed.
-2. Start your server with `python app.py`.
-3. Open the address from your terminal on your browser. And you're all set!
+1. Clone this repository with `git clone https://github.com/shridpant/mindhunters`. 
+2. Navigate to the root folder of the project and execute `pip install -r requirements.txt` to install all dependencies.
+3. Start your server with `python app.py`.
+4. Open the address from your terminal on your browser. And you're all set!
 
 The web application contains a number of desirable features. Examples:
 
