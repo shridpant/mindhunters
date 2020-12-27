@@ -36,7 +36,6 @@ from src.helpers import UserInfo, login_required, error
 
 # Configure application
 app = Flask(__name__)
-# Might encounter browser caching problem. Force refresh using CTRL+F5
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 # Configure session to use filesystem (instead of signed cookies)

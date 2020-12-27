@@ -22,7 +22,7 @@
 
 from flask import redirect, render_template, request, session
 from functools import wraps
-import os
+import os, random
 from cs50 import SQL
 from src import meme
 
@@ -45,4 +45,6 @@ def login_required(f):
 
 def error(message, code=400):
     meme.meme(message)
-    return render_template("error.html")
+    # The random variable prevents browser caching by adding a
+    # randomly generated query string to each request for the dynamic image.
+    return render_template("error.html", random=random.randint(1,32500))
