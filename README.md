@@ -1,4 +1,8 @@
+[![Pull][pr]][pr-url]
 [![Issues][issues]][issues-url]
+[![Size][repo]][repo-url]
+[![Last][last]][last-url]
+[![Contributors][contributors]][contributors-url]
 [![License][license-shield]][license-url]
 
 <br />
@@ -38,6 +42,7 @@
 * [Future Works](#future-works)
 * [Acknowledgements](#acknowledgements)
 
+<!-- PREMISE -->
 ## Premise
 
 **Cyber bullying** has risen exponentially over the years, especially among teens. And while the traumatic experiences of the victims are well-known, little has been done by social media giants to preemptively take action. On a large scale application, merely acting on the _reported posts_ is not nearly sufficient. It is absolutely necessary to proactively participate in the prevention of cyber bullying.
@@ -51,15 +56,18 @@
 
 This project was, originally, made in our participation of <a href="https://devpost.com/software/mindhunters" target="_blank">`UB Hacking 2020`</a>.
 
+<!-- BUILT WITH -->
 ### Built With
 
 The server-side application was built with Flask, Keras and NLTK. SQLite3 was employed for database management, and HTML, CSS and JavaScript for the client-side application. `Mindhunters` was made possible by many open-sourced libraries and frameworks.
 
+<!-- WORKING -->
 ### Working 
 
 A _score_ is associated with each post that the users make. The _score_ is assigned by the sigmoid function in the output layer of `Mindhunters`. If the value of the _score_ is greater than the threshold (θ), then the post is considered to be inappropriate. _θ_ may be tuned between a value of 0 and 1, according to the required sensitivity. The _reputation_ of the users are determined by the _f(x)_, where _f_ is a function incorporating all the individual _scores_ of the posts for each user. Posts that are marked inappropriate decrease the _reputation_ of the users, while the other posts increase it.
 While the _reputation_ system was created to work on the backend of the application, the current version of the Social Media publicly displays the _score_ assigned to each post and the _reputation_ associated with each user. In practise, however, these parameters may be used in he backend to evaluate reasonable actions, including reporting the users to law enforcement.
 
+<!-- USAGE -->
 ### Usage
 
 The social media platform is a web application monitored by `Mindhunters` to provide safety from cyber bullying. To execute, simply:
@@ -79,6 +87,7 @@ The web application contains a number of desirable features. Examples:
 
 ![Profile Screenshot][other-screenshot]
 
+<!-- CONTRIBUTING -->
 ## Contributing
 
 This project welcomes contributions and suggestions. Feel free to fork this repository or submit your ideas through `issues`.
@@ -113,11 +122,18 @@ We plan to extend the `Mindhunters` algorithm to identify misinformation (_fake 
 * [Img Shields](https://shields.io)
 
 <!-- MARKDOWN LINKS & IMAGES -->
-[issues]: https://img.shields.io/github/issues-raw/mindhunters/stockie
+[issues]: https://img.shields.io/github/issues/shridpant/mindhunters
 [issues-url]: https://github.com/shridpant/mindhunters/issues
+[pr]: https://img.shields.io/github/issues-pr/shridpant/mindhunters
+[pr-url]: https://github.com/shridpant/mindhunters/pulls
+[repo]: https://img.shields.io/github/repo-size/shridpant/mindhunters
+[repo-url]: https://github.com/shridpant/mindhunters
+[last]: https://img.shields.io/github/last-commit/shridpant/mindhunters
+[last-url]: https://github.com/shridpant/mindhunters/commits/main
+[contributors]: https://img.shields.io/github/contributors/shridpant/mindhunters
+[contributors-url]: https://github.com/shridpant/mindhunters/graphs/contributors
 [license-shield]: https://img.shields.io/apm/l/vim-mode
 [license-url]: https://github.com/shridpant/mindhunters/blob/master/LICENSE
 [product-screenshot]: static/screenshot.PNG
 [search-screenshot]: static/search-screenshot.PNG
 [other-screenshot]: static/other-screenshot.PNG
-

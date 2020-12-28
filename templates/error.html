@@ -3,7 +3,7 @@
 {% block title %}
     Apology
 {% endblock %}
-
+<!-- {{random}} variable prevents browser caching -->
 {% block main %}
-    <img width="30%" alt="{{ top }}" class="border" src="http://memegen.link/custom/{{ top | urlencode }}/{{ bottom | urlencode }}.jpg?alt=https://i.imgur.com/CsCgN7Ll.png" title="{{ top }}">
+<img width="30%" alt="Error Image" class="border" src="../static/meme/output.png?dummy={{ random }}">
 {% endblock %}
