@@ -8,7 +8,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/shridpant/mindhunters">
-    <img src="static/computer.svg" alt="Logo" width="30">
+    <img src="static/computer.svg" alt="Logo" width="100">
   </a>
   
   <h3 align="center">Mindhunters</h3>
@@ -19,9 +19,11 @@
     <a href="https://github.com/shridpant/mindhunters/blob/main/README.md"><strong>Explore the docs »</strong></a>
     <br />
     <br />
+    ·
     <a href="https://github.com/shridpant/mindhunters/issues">Report Bug</a>
     ·
     <a href="https://github.com/shridpant/mindhunters/issues">Request Feature</a>
+    ·
   </p>
   <p align="center">
   Key Contributors: <a href="https://github.com/gaurav-2626">Gaurav Agrawal</a>, <a href="https://github.com/shridpant">Shrid Pant</a> and <a href="https://github.com/tdhankhar">Tarun Dhankhar</a>.
@@ -55,6 +57,9 @@
 `Mindhunters` is a state-of-the-art LSTM-based NLP-algorithm on which this social media platform is wrapped. It provides sophisticated detection of texts that are violent, offensive, sexist, racist, discriminant or derogatory in nature. Scores are generated using `Mindhunters`, which affect the _reputation_ of each user. The generated scores are used to provide alerts to the social media platform, which may take appropriate action against the post and/or user. 
 
 This project was, originally, made in our participation of <a href="https://devpost.com/software/mindhunters" target="_blank">`UB Hacking 2020`</a>.
+
+**Note:** Due to faulty datasets, we have been unable to develop an accurate model. While the _social media site_ and its accompanying _mindhunters algorithm_ still work, **they have produced erroneous results in many circumstances**. Until we are able to obtain a satisfactory dataset to push promising updates for the mindhunters algorithm, please refain from relying on this project. 
+This project **has not been deprecated** in the interest of open source collaboration. **Pull requests that resolve this (or, any!) issue are welcome!**
 
 <!-- BUILT WITH -->
 ### Built With
@@ -90,12 +95,12 @@ The web application contains a number of desirable features. Examples:
 <!-- CONTRIBUTING -->
 ## Contributing
 
-This project welcomes contributions and suggestions. Feel free to fork this repository or submit your ideas through `issues`.
+This project welcomes contributions and suggestions. Feel free to fork this repository or submit your ideas through [issues](https://github.com/shridpant/stockie/issues). Please carefully read and follow the [Contributor Covenant Code of Conduct](https://github.com/shridpant/mindhunters/blob/main/CODE_OF_CONDUCT.md) while participating in this project.
 
 <!-- LICENSE -->
 ## License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+Distributed under the MIT License. See [LICENSE](https://github.com/shridpant/mindhunters/blob/main/LICENSE) for more information.
 
 <!-- CONTACT -->
 ## Contact
