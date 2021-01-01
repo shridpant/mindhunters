@@ -24,7 +24,14 @@ import pickle
 import pandas as pd
 import numpy as np
 import string
+
 import nltk
+# Comment out these statements if your packages are already up-to-date!
+nltk.download('stopwords')
+nltk.download('punkt')
+nltk.download('averaged_perceptron_tagger')
+nltk.download('wordnet')
+# ------------------------ #
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords
 from nltk.corpus import wordnet
