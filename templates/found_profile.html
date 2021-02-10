@@ -13,7 +13,14 @@
     <div class="col-6" style="text-align: left;">
             <h2 class="card-title"><strong>{{ user["username"] }}</strong></h2>
             <p>{{ user["bio"] }}</p><br />
-            <a href="" class="btn btn-outline-dark">Reputation Score: {{ reputation }}</a><br />
+            <a href="" class="btn btn-outline-dark">Reputation Score: {{ reputation }}</a><br /><br />
+            <form action="/{{ user['username'] }}" method="post">
+                {% if follow_info %}
+                    <button type="submit" name="follow_button" class="btn btn-outline-dark" value="unfollow">Unfollow</button>
+                {% else %}
+                    <button type="submit" name="follow_button" class="btn btn-outline-dark" value="follow">Follow</button>
+                {% endif %}
+            </form><br />
     </div>
 </div>
 {% if posts is defined %}

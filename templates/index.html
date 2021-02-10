@@ -27,8 +27,8 @@
         <div class="card-body text-dark">
             <div class="row">
                 <div class="col-4" style="text-align: right;">
-                    <img src="{{ dp }}" style="max-width:25%; max-height:auto" alt="Display Picture"><br />
-                    <strong>{{ user["username"] }}</strong>
+                        <img src="{{ posts_metadata[post['publisher']] }}" style="max-width:25%; max-height:auto" alt="Display Picture"><br />
+                        <strong>{{  post["publisher"] }}</strong>
                 </div>
                 <div class="col-6" style="text-align: left;">
                     <h5 class="card-title">{{ post["text"] }}</h5>

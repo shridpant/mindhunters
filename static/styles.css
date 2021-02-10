@@ -1,0 +1,30 @@
+nav .navbar-brand
+{
+    /* size for brand */
+    font-size: x-large;
+}
+
+main .form-control
+{
+    display: inline-block;
+    width: auto;
+}
+
+main
+{
+    overflow-x: hidden;
+    text-align: center;
+}
+
+main img
+{
+    max-width: 100%;
+}
+.center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.nav-link{
+    color:#808080;
+}
